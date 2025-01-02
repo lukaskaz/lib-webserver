@@ -4,8 +4,6 @@
 #include "webserver/server_base.hpp"
 #include "webserver/support.hpp"
 
-void _callback(int, Server_base::Functions&);
-
 namespace http
 {
 
@@ -18,7 +16,7 @@ class Server : public Server_base
     ~Server();
 
     void listen();
-    Server& get(std::string, Callback);
+    Server& get(const std::string&, Callback&&);
 };
 
 }; // namespace http

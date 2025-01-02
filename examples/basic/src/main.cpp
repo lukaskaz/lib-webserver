@@ -1,4 +1,4 @@
-#include "webserver/server.hpp"
+#include "webserver/interfaces/http.hpp"
 
 #include <iostream>
 
