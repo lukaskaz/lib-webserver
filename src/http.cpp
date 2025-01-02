@@ -1,4 +1,4 @@
-#include "webserver/server.hpp"
+#include "webserver/interfaces/http.hpp"
 
 void _callback(int client, Server_base::Functions& paths_f)
 {
@@ -32,9 +32,9 @@ void Server::listen()
         tp.exec(_callback, client, paths_f);
 }
 
-Server& Server::get(std::string path, Callback f)
+Server& Server::get(const std::string& path, Callback&& f)
 {
-    paths_f[path] = f;
+    paths_f[path] = std::move(f);
     return *this;
 }
 
