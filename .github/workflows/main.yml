@@ -34,7 +34,7 @@ jobs:
         mkdir build && cd build && cmake -DADD_EXAMPLES=ON .. && make
     - name: Executing normal program
       run: ./build/examples/normal/normal
-      - name: Executing async program
+    - name: Executing async program
       run: ./build/examples/async/async
 
   test:

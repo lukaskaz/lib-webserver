@@ -37,7 +37,7 @@ int main()
                        "   </body>"
                        "</html>";
             });
-        // non-comment to check non blocking run of this example
+        // non-comment to check non blocking run for this example
         async =
             std::async(std::launch::async, [&server]() { server.listen(); });
     }
