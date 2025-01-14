@@ -32,8 +32,10 @@ jobs:
     - name: Preparing binary
       run: |
         mkdir build && cd build && cmake -DADD_EXAMPLES=ON .. && make
-    - name: Executing basic program
-      run: ./build/examples/basic/basic
+    - name: Executing normal program
+      run: ./build/examples/normal/normal
+    - name: Executing async program
+      run: ./build/examples/async/async
 
   test:
     name: Unit tests
