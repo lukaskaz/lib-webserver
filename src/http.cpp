@@ -23,7 +23,16 @@ namespace http
 Server::Server(uint16_t port) : Server_base(port)
 {}
 
-Server::~Server() = default;
+Server::~Server()
+{
+    close();
+};
+
+Server& Server::get(const std::string& path, Callback&& f)
+{
+    paths_f[path] = std::move(f);
+    return *this;
+}
 
 void Server::listen()
 {
@@ -32,10 +41,9 @@ void Server::listen()
         tp.exec(_callback, client, paths_f);
 }
 
-Server& Server::get(const std::string& path, Callback&& f)
+void Server::close()
 {
-    paths_f[path] = std::move(f);
-    return *this;
+    ::close(sock_fd);
 }
 
 } // namespace http

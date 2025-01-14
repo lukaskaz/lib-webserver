@@ -15,8 +15,9 @@ class Server : public Server_base
     Server(uint16_t);
     ~Server();
 
-    void listen();
     Server& get(const std::string&, Callback&&);
+    void listen();
+    void close();
 };
 
 }; // namespace http
