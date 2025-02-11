@@ -30,27 +30,27 @@ class Thread_pool
     Thread_pool& operator=(const Thread_pool&) = delete;
 
     template <typename F, typename... Args>
-    void exec(F&& f, Args&&... args)
+    void exec(F& f, Args&... args)
     {
         std::unique_lock<std::mutex> lck(mtx);
         if (_pos.size() == 0)
         {
             _thread_list.push_back(std::make_unique<guarded_thread>(
-                [&](std::size_t id, F& f, Args&... args) {
+                [this](std::size_t id, F f, Args... args) {
                     f(args...);
                     std::unique_lock<std::mutex> lck(mtx);
                     _pos.push_back(id);
                 },
-                _thread_list.size(), std::ref(f), std::ref(args)...));
+                _thread_list.size(), f, args...));
             return;
         }
         _thread_list[_pos[0]] = std::make_unique<guarded_thread>(
-            [&](std::size_t id, F& f, Args&... args) {
+            [this](std::size_t id, F f, Args... args) {
                 f(args...);
                 std::unique_lock<std::mutex> lck(mtx);
                 _pos.push_back(id);
             },
-            _pos[0], std::ref(f), std::ref(args)...);
+            _pos[0], f, args...);
         _pos.erase(_pos.begin());
     }
 
